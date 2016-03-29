@@ -1,5 +1,4 @@
 @page can-construct-proxy
-@hide description
 
 # can-construct-proxy
 
