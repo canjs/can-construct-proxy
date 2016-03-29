@@ -1,3 +1,6 @@
+@page can-construct-proxy
+@hide description
+
 # can-construct-proxy
 
 [![Build Status](https://travis-ci.org/canjs/can-construct-proxy.png?branch=master)](https://travis-ci.org/canjs/can-construct-proxy)
