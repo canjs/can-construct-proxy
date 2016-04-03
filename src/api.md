@@ -1,4 +1,4 @@
-@page api API Reference
+@function can.Construct.proxy
 @parent can-construct-proxy
 @test can/construct/proxy/test.html
 @download http://donejs.com/can/dist/can.construct.proxy.js
