@@ -1,4 +1,4 @@
-# can-construct-proxy
+# can-construct-proxy (DEPRECATED)
 
 *The can-construct-proxy has been deprecated. See [can.proxy](https://canjs.com/docs/can.proxy.html) to proxy callbacks outside of `can.Construct`s*
 
