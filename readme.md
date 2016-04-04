@@ -1,8 +1,6 @@
-@page can-construct-proxy
-@test can/construct/proxy/test.html
-@download http://donejs.com/can/dist/can.construct.proxy.js
+# can-construct-proxy
 
-## can-construct-proxy
+*The can-construct-proxy has been deprecated. See [can.proxy](https://canjs.com/docs/can.proxy.html) to proxy callbacks outside of `can.Construct`s*
 
 [![Build Status](https://travis-ci.org/canjs/can-construct-proxy.png?branch=master)](https://travis-ci.org/canjs/can-construct-proxy)
 
@@ -113,9 +111,86 @@ var DelayedStaticCounter = can.Construct.extend({
 DelayedStaticCounter.incrementSoon();
 ```
 
-### See Also
+## API Reference
 
-[can.proxy](https://canjs.com/docs/can.proxy.html) is a way to proxy callbacks outside of `can.Construct`s.
+### `can.Construct.proxy(callback, [...args])`
+
+Creates a static callback function that has `this` set to an instance of the constructor function.
+
+#### Params
+
+##### `{Function|String|Array.<Function|String>}` callback
+
+Function or functions to proxy
+
+Passing a single function returns a function bound to the constructor.
+```
+var Animal = can.Construct.extend({
+    init: function(name) {
+        this.name = name;
+    },
+    speak: function (words) {
+        console.log(this.name + ' says: ' + words);
+    }
+});
+
+var dog = new Animal("Gertrude");
+
+// Passing a function
+var dogDance = dog.proxy(function(dance){
+    console.log(this.name + ' loves dancing the ' + dance);
+});
+dogDance('hokey pokey'); // Gertrude loves dancing the hokey pokey
+```
+
+Passing an array of functions returns a function that when executed will call the functions in order applying the returned values from the previous function onto the next function.
+```
+// Passing an array of functions
+var dogCount = dog.proxy([
+    function (start){
+        console.log(start);
+        return [start, start + 1];
+    },
+    function(start, next) {
+        console.log(start + ' ' + next);
+        return [start, next, next + 1];
+    },
+    function(start, next, last) {
+        console.log(start + ' ' + next + ' ' + last);
+    }
+]);
+
+dogCount(3); // 3, 3 4, 3 4 5
+```
+
+In either case a string can be passed instead of a function and this will be used to look the function up on the constructor.
+
+```
+var dogTalk = dog.proxy('speak');
+dogTalk('This is crAAaaaaAAzzzyyy'); // Gertrude says: This is crAAaaaaAAzzzyyy
+```
+
+##### `{*}` args
+Continuing from the example above:
+
+```
+var func = function(feeling, thing){
+    console.log(this.name + ' ' + feeling + ' ' + thing);
+};
+// Passing one argument (partial application)
+var dogLoves = dog.proxy(func, 'loves');
+dogLoves('cupcakes!'); // Gertrude loves cupcakes!
+
+// Passing many arguments
+var dogHateUnicorns = dog.proxy(func, 'hates', 'unicorns');
+dogHateUnicorns(); // Gertrude hates unicorns
+```
+
+#### Return
+
+##### `{Function}`
+
+A function that calls `callback` with the same context as the current context.
 
 ## Usage
 
@@ -166,7 +241,7 @@ Load the `global` version of the plugin:
 <script src='./node_modules/can-construct-proxy/dist/global/can-construct-proxy.js'></script>
 ```
 
-## Contributing
+## Making Changes
 
 ### Making a Build
 
