@@ -1,5 +1,7 @@
 # can-construct-proxy (DEPRECATED)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/canjs/can-construct-proxy.svg)](https://greenkeeper.io/)
+
 *The can-construct-proxy has been deprecated. See [can.proxy](https://canjs.com/docs/can.proxy.html) to proxy callbacks outside of `can.Construct`s*
 
 [![Build Status](https://travis-ci.org/canjs/can-construct-proxy.png?branch=master)](https://travis-ci.org/canjs/can-construct-proxy)
