@@ -6,12 +6,12 @@ require('steal-qunit');
 
 QUnit.module('can/construct/proxy');
 
-test('static proxy if control is loaded first', function () {
+QUnit.test('static proxy if control is loaded first', function(assert) {
 	var curVal = 0;
-	expect(2);
+	assert.expect(2);
 	can.Control('Car', {
 		show: function (value) {
-			equal(curVal, value);
+			assert.equal(curVal, value);
 		}
 	}, {});
 	var cb = Car.proxy('show');
@@ -21,12 +21,12 @@ test('static proxy if control is loaded first', function () {
 	var cb2 = Car.proxy('show', 2);
 	cb2();
 });
-test('proxy', function () {
+QUnit.test('proxy', function(assert) {
 	var curVal = 0;
-	expect(2);
+	assert.expect(2);
 	can.Construct('Car', {
 		show: function (value) {
-			equal(curVal, value);
+			assert.equal(curVal, value);
 		}
 	}, {});
 	var cb = Car.proxy('show');
@@ -39,13 +39,13 @@ test('proxy', function () {
 
 // this won't work in dist mode (this functionality is removed)
 if (typeof steal !== 'undefined') {
-	test('proxy error', 1, function () {
+	QUnit.test('proxy error', 1, function(assert) {
 		can.Construct('Car', {});
 		try {
 			Car.proxy('huh');
-			ok(false, 'I should have errored');
+			assert.ok(false, 'I should have errored');
 		} catch (e) {
-			ok(true, 'Error was thrown');
+			assert.ok(true, 'Error was thrown');
 		}
 	});
 }
